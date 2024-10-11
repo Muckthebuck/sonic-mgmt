@@ -47,6 +47,20 @@ topology:
         - "1.26@11"
       vm_offset: 7
   DUT:
+    vs_chassis:
+      inband_port:
+        - [19, 40]
+        - [19, 40]
+      midplane_port:
+        - 0
+        - 0
+        - 0
+      midplane_address:
+        - 10.6.1.100/16
+        - 10.6.2.100/16
+        - 10.6.0.100/16
+      midplane_subnet: 10.6.0.0/16
+      chassis_db_ip: 10.6.0.100
     loopback:
       ipv4:
         - 10.1.0.1/32
