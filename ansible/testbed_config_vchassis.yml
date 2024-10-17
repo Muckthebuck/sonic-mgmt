@@ -116,7 +116,7 @@
       - bgp
       - teamd
       - gbsyncd
-    when: num_asic > 1 and card_type == "linecard"
+    when: num_asic|int > 1 and card_type == "linecard"
 
   - name: reboot DUTs
     command: reboot
