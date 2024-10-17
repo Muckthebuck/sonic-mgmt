@@ -191,8 +191,8 @@ class SonicPortAliasMap():
                                     str(asic_id)
                     if (asic_name_index != -1) and (len(mapping) > asic_name_index):
                         asicifname = mapping[asic_name_index]
-                        asic_if_names.append(asicifname)
                         if asic_id is not None:
+                            asic_if_names.append(asicifname)
                             asic_if_ids.append("ASIC" + str(asic_id))
                     if (speed_index != -1) and (len(mapping) > speed_index):
                         speed = mapping[speed_index]
@@ -214,9 +214,9 @@ class SonicPortAliasMap():
 
         # Special handling for the Cpu port
         if include_internal:
-            aliases.append(("Cpu0/{}".format(asic_id), -1))
-        asic_if_names.append("Cpu0")
+            aliases.append(("Cpu0/{}".format(asic_id if asic_id is not None else 0), -1))
         if asic_id is not None:
+            asic_if_names.append("Cpu0")
             asic_if_ids.append("ASIC" + str(asic_id))
         if len(sysports) > 0:
             sysport = {}
@@ -309,6 +309,14 @@ def main():
         hostname = ""
         if 'hostname' in m_args:
             hostname = m_args['hostname']
+
+        if include_internal:
+            aliases.append(("Midplane", -1))
+            if num_asic > 1:
+                # only fill in these 2 variables when there are more than 1 ASICs
+                asic_if_names.append("Midplane")
+                asic_if_asic_ids.append(None)
+
         for asic_id in range(num_asic):
             if switchids and asic_id is not None:
                 switchid = switchids[asic_id]
