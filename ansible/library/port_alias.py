@@ -265,6 +265,7 @@ def main():
         asic_if_asic_ids = []
 
         if 'card_type' in m_args and m_args['card_type'] == 'supervisor':
+            aliases.append(("Midplane", -1))
             module.exit_json(ansible_facts={'port_alias': aliases,
                                             'front_panel_port_alias': front_panel_aliases,
                                             'port_name_map': portmap,
@@ -310,7 +311,7 @@ def main():
         if 'hostname' in m_args:
             hostname = m_args['hostname']
 
-        if include_internal:
+        if include_internal and ('card_type' in m_args and m_args['card_type'] == 'linecard'):
             aliases.append(("Midplane", -1))
             if num_asic > 1:
                 # only fill in these 2 variables when there are more than 1 ASICs
