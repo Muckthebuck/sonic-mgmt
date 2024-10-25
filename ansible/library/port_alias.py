@@ -99,7 +99,7 @@ class SonicPortAliasMap():
         return None
 
     def get_portmap(self, asic_id=None, include_internal=False,
-                    hostname=None, switchid=None, slotid=None):
+                    hostname=None, switchid=None, slotid=None, card_type=None):
         aliases = []
         front_panel_aliases = []
         portmap = {}
@@ -213,9 +213,9 @@ class SonicPortAliasMap():
                         indexmap[mapping[port_index]] = name
 
         # Special handling for the Cpu port
-        if include_internal:
+        if include_internal and card_type == "linecard":
             aliases.append(("Cpu0/{}".format(asic_id if asic_id is not None else 0), -1))
-        if asic_id is not None:
+        if asic_id is not None and card_type == "linecard":
             asic_if_names.append("Cpu0")
             asic_if_ids.append("ASIC" + str(asic_id))
         if len(sysports) > 0:
@@ -310,8 +310,11 @@ def main():
         hostname = ""
         if 'hostname' in m_args:
             hostname = m_args['hostname']
+        card_type = None
+        if 'card_type' in m_args:
+            card_type = m_args['card_type']
 
-        if include_internal and ('card_type' in m_args and m_args['card_type'] == 'linecard'):
+        if include_internal and card_type == 'linecard':
             aliases.append(("Midplane", -1))
             if num_asic > 1:
                 # only fill in these 2 variables when there are more than 1 ASICs
@@ -325,7 +328,7 @@ def main():
                 asic_id = None
             (aliases_asic, front_panel_aliases_asic, portmap_asic, aliasmap_asic, portspeed_asic, front_panel_asic, front_panel_asic_ids,
              asicifnames_asic, asicifids_asic, sysport_asic, index_name) = allmap.get_portmap(
-                asic_id, include_internal, hostname, switchid, slotid)
+                asic_id, include_internal, hostname, switchid, slotid, card_type)
             if aliases_asic is not None:
                 aliases.extend(aliases_asic)
             if front_panel_aliases_asic is not None:
