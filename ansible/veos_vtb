@@ -245,8 +245,8 @@ all:
           macsec_enabled: True
           voq_inband_intf: [Ethernet-IB0,Ethernet-IB1]
           voq_inband_type: port
-          voq_inband_ip: [3.3.3.1/24,3.3.3.2/24]
-          voq_inband_ipv6: [3333::3:1/112,3333::3:2/112]
+          voq_inband_ip: [3.3.3.1/32,3.3.3.2/32]
+          voq_inband_ipv6: [3333::3:1/128,3333::3:2/128]
           loopback4096_ip: [8.0.0.1/32,8.0.0.2/32]
           loopback4096_ipv6: [2603:10e2:400::1/128,2603:10e2:400::2/128]
           switchids: [0,2]
@@ -270,8 +270,8 @@ all:
           macsec_enabled: True
           voq_inband_intf: [Ethernet-IB0,Ethernet-IB1]
           voq_inband_type: port
-          voq_inband_ip: [3.3.3.3/24,3.3.3.4/24]
-          voq_inband_ipv6: [3333::3:3/112,3333::3:4/112]
+          voq_inband_ip: [3.3.3.3/32,3.3.3.4/32]
+          voq_inband_ipv6: [3333::3:3/128,3333::3:4/128]
           loopback4096_ip: [8.0.0.3/32,8.0.0.4/32]
           loopback4096_ipv6: [2603:10e2:400::3/128,2603:10e2:400::4/128]
           switchids: [4,6]
