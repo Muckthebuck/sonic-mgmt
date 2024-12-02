@@ -1,0 +1,6 @@
+{% if card_type == 'supervisor' %}
+{{'supervisor=1'}}
+{% endif %}
+{% if card_type == 'linecard' and macsec_enabled %}
+{{'macsec_enabled=1'}}
+{% endif %}

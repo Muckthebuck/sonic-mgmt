@@ -98,9 +98,9 @@
       become: true
 
     - name: Create platform_env.conf
-      shell: echo "macsec_enabled=1" > /usr/share/sonic/device/{{ platform }}/platform_env.conf
+      template: src=templates/platform_env.conf.j2
+                dest=/usr/share/sonic/device/{{ platform }}/platform_env.conf
       become: true
-      when: card_type == "linecard" and macsec_enabled
 
     - name: Create vs_chassis_metadata.json
       template: src=templates/vs_chassis_metadata.json.j2
