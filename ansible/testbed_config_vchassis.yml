@@ -116,6 +116,14 @@
       - bgp
       - teamd
       - gbsyncd
+      - database
+    when: num_asic|int > 1 and card_type == "linecard"
+
+  - name: unmask critical services if the linecard is multi-asic
+    shell: systemctl unmask {{ item }}
+    become: true
+    with_items:
+      - database
     when: num_asic|int > 1 and card_type == "linecard"
 
   - name: reboot DUTs
