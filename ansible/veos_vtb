@@ -294,38 +294,6 @@ all:
           ansible_user: admin
           card_type: supervisor
           slot_num: slot0
-        vlab-t2-05:
-          ansible_host: 10.250.0.126
-          ansible_hostv6: fec0::ffff:afa:16
-          type: kvm
-          hwsku: Arista-7800R3-48CQM2-C48
-          serial_port: 9026
-          ansible_password: password
-          ansible_user: admin
-          card_type: linecard
-          slot_num: slot1
-          num_asics: 1
-        vlab-t2-06:
-          ansible_host: 10.250.0.127
-          ansible_hostv6: fec0::ffff:afa:17
-          type: kvm
-          hwsku: Arista-7800R3-48CQM2-C48
-          serial_port: 9027
-          ansible_password: password
-          ansible_user: admin
-          card_type: linecard
-          slot_num: slot2
-          num_asics: 1
-        vlab-t2-sup2:
-          ansible_host: 10.250.0.128
-          ansible_hostv6: fec0::ffff:afa:18
-          type: kvm
-          hwsku: Arista-7808R3A-FM
-          serial_port: 9028
-          ansible_password: password
-          ansible_user: admin
-          card_type: supervisor
-          slot_num: slot0
         vlab-09:
           ansible_host: 10.250.0.115
           ansible_hostv6: fec0::ffff:afb:1
