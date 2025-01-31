@@ -55,12 +55,6 @@ topology:
         - 0
         - 0
         - 0
-      midplane_address:
-        - 10.6.1.100/16
-        - 10.6.2.100/16
-        - 10.6.0.100/16
-      midplane_subnet: 10.6.0.0/16
-      chassis_db_ip: 10.6.0.100
     loopback:
       ipv4:
         - 10.1.0.1/32
