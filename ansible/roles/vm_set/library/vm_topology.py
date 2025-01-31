@@ -151,8 +151,8 @@ RETRIES = 10
 # name of interface must be less than or equal to 15 bytes.
 MAX_INTF_LEN = 15
 
-VS_CHASSIS_INBAND_BRIDGE_NAME = "br-T2Inband"
-VS_CHASSIS_MIDPLANE_BRIDGE_NAME = "br-T2Midplane"
+VS_CHASSIS_INBAND_BRIDGE_NAME = "br-T2Inband1"
+VS_CHASSIS_MIDPLANE_BRIDGE_NAME = "br-T2Midplane1"
 
 BACKEND_TOR_TYPE = "BackEndToRRouter"
 BACKEND_LEAF_TYPE = "BackEndLeafRouter"

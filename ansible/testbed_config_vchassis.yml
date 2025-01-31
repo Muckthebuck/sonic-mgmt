@@ -41,6 +41,10 @@
   - name: Set midplane address
     set_fact:
       midplane_address: "{{ topology['DUT']['vs_chassis']['midplane_address'][ansible_play_batch.index(inventory_hostname)] }}"
+  # print using debug hostvars[inventory_hostname].ansible_host, hostvars[inventory_hostname].mgmt_prefixlen, hostvars[inventory_hostname].mgmt_gw
+  - debug: msg="ansible_host = {{ hostvars[inventory_hostname].ansible_host }}"
+  - debug: msg="mgmt_gw = {{ hostvars[inventory_hostname].mgmt_gw }}"
+  - debug: msg="mgmt_prefixlen = {{ hostvars[inventory_hostname].mgmt_prefixlen }}"
 
   - debug: msg="s/^exit 0/sudo ip address add {{ hostvars[inventory_hostname].ansible_host }}\/{{ hostvars[inventory_hostname].mgmt_prefixlen }} dev eth0\nsudo ip route add 0.0.0.0\/0 via {{ hostvars[inventory_hostname].mgmt_gw }} table default\nexit 0/"
 
