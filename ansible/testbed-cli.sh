@@ -336,6 +336,11 @@ function add_topo
       -e topo="$topo" -e testbed_file=$tbfile -e vm_file=$vmfile  -e server="$server" $@
     fi
 
+    if [[ $topo == *"t2"* ]]; then
+      ansible-playbook -i ${inv_name} testbed_config_vchassis.yml --vault-password-file="$passfile" -l "$duts" -e testbed_name="$testbed_name" \
+      -e topo="$topo" -e testbed_file=$tbfile -e vm_file=$vmfile  -e server="$server" $@
+    fi
+
     # Delete the obsoleted arp entry for the PTF IP
     ip neighbor flush $ptf_ip || true
   done

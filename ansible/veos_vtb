@@ -85,6 +85,12 @@ all:
         vlab-t2-05:
         vlab-t2-06:
         vlab-t2-sup2:
+        vlab-t2-03:
+        vlab-t2-04:
+        vlab-t2-sup1:
+        vlab-t2-05:
+        vlab-t2-06:
+        vlab-t2-sup2:
     ptf:
       hosts:
         ptf-01:
