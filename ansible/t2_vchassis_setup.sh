@@ -31,7 +31,7 @@ for TOPOLOGY in ${TOPOLOGIES[@]}; do
   echo "Spinning up a t2 testbed for $TOPOLOGY..."
   echo "======================================"
   echo "======================================"
-  ./testbed-cli.sh -t vtestbed.yaml -m veos_vtb -k ceos add-topo $TOPOLOGY password.txt -vvv
+  ./testbed-cli.sh -t vtestbed.yaml -m veos_vtb -k ceos add-topo $TOPOLOGY password.txt 
 
   # Initialize the t2 testbed to have chassis-related configuration
   echo "======================================"
@@ -39,7 +39,7 @@ for TOPOLOGY in ${TOPOLOGIES[@]}; do
   echo "Initializing the t2 testbed to have chassis-related configuration for $TOPOLOGY..."
   echo "======================================"
   echo "======================================"
-  ./testbed-cli.sh -m veos_vtb -t vtestbed.yaml -k ceos config-vs-chassis $TOPOLOGY veos_vtb password.txt -vvv
+  ./testbed-cli.sh -m veos_vtb -t vtestbed.yaml -k ceos config-vs-chassis $TOPOLOGY veos_vtb password.txt
 
   # Deploy the minigraph
   echo "======================================"
