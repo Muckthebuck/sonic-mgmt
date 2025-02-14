@@ -98,6 +98,7 @@ function read_csv
 
   NL='
 '
+echo $line
   case $line in
     *"$NL"*) echo "Find more than one testbed names in $tbfile"
              exit
@@ -124,7 +125,7 @@ function read_csv
 function read_yaml
 {
   content=$(python -c "from __future__ import print_function; import yaml; print('+'.join(str(tb) for tb in yaml.safe_load(open('$tbfile')) if '$1'==tb['conf-name']))")
-
+  echo $content
   IFS=$'+' read -r -a tb_lines <<< $content
   linecount=${#tb_lines[@]}
 

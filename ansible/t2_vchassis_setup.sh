@@ -47,7 +47,7 @@ for TOPOLOGY in ${TOPOLOGIES[@]}; do
   echo "Deploying the minigraph for $TOPOLOGY..."
   echo "======================================"
   echo "======================================"
-  ./testbed-cli.sh -t vtestbed.yaml -m veos_vtb deploy-mg $TOPOLOGY veos_vtb password.txt -vvv
+  ./testbed-cli.sh -t vtestbed.yaml -m veos_vtb deploy-mg $TOPOLOGY veos_vtb password.txt
 
   echo "======================================"
   echo "Finished setting up the topology $TOPOLOGY."

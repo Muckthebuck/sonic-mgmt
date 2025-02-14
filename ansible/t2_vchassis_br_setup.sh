@@ -31,17 +31,15 @@ VM_ASIC="0"
 VM_IPv4="10.0.1.27"
 VM_IPv6="FC01::5d"
 VM_ASN="65101"
-VM_INT_fix = "Ethernet56"
-VM_INT_fix_IPv6 = "FC01::9/126"
-VM_INT_fix_IP6_ROUTE = "FC01::8/126"
+VM_INT_fix="Ethernet56"
+VM_INT_fix_IPv6="FC01::9/126"
+VM_INT_fix_IP6_ROUTE="FC01::8/126"
 AGGREGATE_PREFIX="fc01::/64"	
 AGGREGATE_PREFIX_N="fc00::/64"
 ANCHOR_PREFIX="fc01::/48"	
 APPLY_ANCHOR_ROUTE=1'
 )
 # 65201 -> other T3 , and 601# are T1s
-#ANCHOR_PREFIX="2064:200::/48"
-#AGGREGATE_PREFIX="2064:200::/64"	
 CONFIGS+=(
 'BRIDGE_NAME="br5"
 BR_VETH_INTERFACE="veth36"
@@ -65,79 +63,14 @@ VM_ASIC="0"
 VM_IPv4="10.0.0.25"
 VM_IPv6="FC00::4d"
 VM_ASN="65100"
-VM_INT_fix = "Port-Channel102"
-VM_INT_fix_IPv6 = "FC01::1/126"
-VM_INT_fix_IP6_ROUTE = "FC01::/126"
+VM_INT_fix="PortChannel102"
+VM_INT_fix_IPv6="FC00::1/126"
+VM_INT_fix_IP6_ROUTE="FC00::/126"
 AGGREGATE_PREFIX="fc00::/64"	
 AGGREGATE_PREFIX_N="fc01::/64"	
 ANCHOR_PREFIX="fc00::/48"
 APPLY_ANCHOR_ROUTE=0'
 )
-
-
-# CONFIGS+=(
-# 'BRIDGE_NAME="br6"
-# BR_VETH_INTERFACE="veth25"
-# CEOS_DEVICE_NAME="ARISTA04T3"
-# CEOS_CONTAINER_NAME="ceos_vms6-4-m_VM0102"
-# nCEOS_CONTAINER_NAME="ceos_vms6-4-n_VM0111"
-# NET_CONTAINER_NAME="net_vms6-4-m_VM0102"
-# CEOS_VETH_INTERFACE="35"
-# CEOS_IPv4="10.0.1.34"
-# CEOS_IPv6="FC01::6e"
-# CEOS_ASN="65200"
-# nCEOS_ASN="65201"
-# CEOS_n_T2_IPV6="FC00::1"
-# VM_NAME="vlab-t2-01"
-# VM_HOST_INTERFACE="vlab-t2-01-34"
-# VM_ANSIBLE_IP="10.250.0.120"
-# VM2_ANSIBLE_IP="10.250.0.121"
-# VM_ANSIBLE_P="password"
-# VM_INTERFACE="Ethernet232"
-# VM_ASIC="1"
-# VM_IPv4="10.0.1.33"
-# VM_IPv6="FC01::6d"
-# VM_ASN="65101"
-# AGGREGATE_PREFIX="fc01::/64"	
-# AGGREGATE_PREFIX_N="fc00::/64"
-# ANCHOR_PREFIX="fc01::/48"	
-# APPLY_ANCHOR_ROUTE=1'
-# )
-# 65201 -> other T3 , and 601# are T1s
-#ANCHOR_PREFIX="2064:200::/48"
-#AGGREGATE_PREFIX="2064:200::/64"	
-# CONFIGS+=(
-# 'BRIDGE_NAME="br7"
-# BR_VETH_INTERFACE="veth26"
-# CEOS_DEVICE_NAME="ARISTA16T3"
-# CEOS_CONTAINER_NAME="ceos_vms6-4-n_VM0111"
-# nCEOS_CONTAINER_NAME="ceos_vms6-4-m_VM0102"
-# NET_CONTAINER_NAME="net_vms6-4-n_VM0111"
-# CEOS_VETH_INTERFACE="36"
-# CEOS_IPv4="10.0.0.34"
-# CEOS_IPv6="FC00::6e"
-# CEOS_ASN="65201"
-# nCEOS_ASN="65200"
-# CEOS_n_T2_IPV6="FC01::9"
-# VM_NAME="vlab-t2-03"
-# VM_HOST_INTERFACE="vlab-t2-03-25"
-# VM_ANSIBLE_IP="10.250.0.123"
-# VM2_ANSIBLE_IP="10.250.0.124"
-# VM_ANSIBLE_P="password"
-# VM_INTERFACE="Ethernet160"
-# VM_ASIC="1"
-# VM_IPv4="10.0.0.33"
-# VM_IPv6="FC00::6d"
-# VM_ASN="65100"
-# AGGREGATE_PREFIX="fc00::/64"	
-# AGGREGATE_PREFIX_N="fc01::/64"	
-# ANCHOR_PREFIX="fc00::/48"
-# APPLY_ANCHOR_ROUTE=0'
-# )
-
-
-#ANCHOR_PREFIX="2064:100::/48"
-#AGGREGATE_PREFIX="2064:100::/64"
 
 # Function to load configuration and execute steps
 run_config() {
@@ -151,10 +84,12 @@ run_config() {
     configure_vm_interface
     # t2_radian_configs
     # t3_radian_configs
+    t2_push_aggregate_configs
+    t2_downlink_aggregate_configs
     if [ $APPLY_ANCHOR_ROUTE -eq 1 ]; then
       t2_push_radian_configs_v_2
-      t3_push_radian_configs_v_2
     fi
+    t3_push_radian_configs_v_2
 }
 
 install_prerequisites() {
@@ -260,20 +195,44 @@ configure_ceos_interface() {
 # you will get the mac address of asic0 
 # change the ip -6 neigh entry for your T1 vm
 # so here fc01::1a is the t1 vm ip and 22:db:46:9b:0c:d0 is the mac address of asic0 on downlink
-## vlab-t2-01
+##vlab-t2-01
 ## sudo ip netns exec asic0 ip -6 neigh change fc01::1a dev Ethernet-IB0 lladdr 22:db:46:9b:0c:d0
 # vlab-t2-03
-## sudo ip netns exec asic0 ip -6 neigh change fc00::1a dev Ethernet-IB0 lladdr 22:d4:83:e7:9c:20
+# sudo ip netns exec asic0 ip -6 neigh del fc00::1b dev Ethernet-IB0 lladdr 22:d4:83:e7:9c:20
+# sudo ip netns exec asic0 ip -6 neigh change fc00::1a dev Ethernet-IB0 lladdr 22:d4:83:e7:9c:20
 # vlab-t2-04
-## sudo ip netns exec asic0 ip -6 neigh change fc00::2 dev Ethernet-IB0 lladdr 22:3a:62:33:aa:20
-## sudo ip netns exec asic0 ip -6 neigh add fc00::4e dev Ethernet-IB0 lladdr 22:3a:62:33:aa:20
+# sudo ip netns exec asic0 ip -6 neigh change fc00::2 dev Ethernet-IB0 lladdr 22:3a:62:33:aa:20
+# sudo ip netns exec asic0 ip -6 neigh add fc00::4e dev Ethernet-IB0 lladdr 22:3a:62:33:aa:20
 
 # sudo ip netns exec asic0 ip -6 neigh change fc00::e dev Ethernet-IB0 lladdr 22:3a:62:33:aa:21
 #  sudo ip netns exec asic0 ip -6 neigh add fc00::6e dev Ethernet-IB0 lladdr 22:3a:62:33:aa:21
 # sudo ip netns exec asic1 ip -6 neigh change fc00::e dev Ethernet-IB1 lladdr 22:3a:62:33:aa:21
 #  sudo ip netns exec asic1 ip -6 neigh add fc00::6e dev Ethernet-IB1 lladdr 22:3a:62:33:aa:21
 
-
+fix_pings(){
+  # ssh intovlab-t2-01
+  VM_ANSIBLE_P="password"
+  sudo ssh-keygen -f "/root/.ssh/known_hosts" -R "10.250.0.120"	
+  sshpass -p "$VM_ANSIBLE_P" ssh -t -o StrictHostKeyChecking=no "admin@10.250.0.120" << EOF
+sudo ip netns exec asic0 ip -6 neigh change fc01::1a dev Ethernet-IB0 lladdr 22:db:46:9b:0c:d0
+EOF
+ # ssh intovlab-t2-02
+  sudo ssh-keygen -f "/root/.ssh/known_hosts" -R "10.250.0.121"	
+  sshpass -p "$VM_ANSIBLE_P" ssh -t -o StrictHostKeyChecking=no "admin@10.250.0.121" << EOF
+sudo ip netns exec asic0 ip -6 neigh change fc01::a dev Ethernet-IB0 lladdr 22:e1:bc:98:da:30
+EOF
+  # ssh into vlab-t2-03
+  sudo ssh-keygen -f "/root/.ssh/known_hosts" -R "10.250.0.123"
+  sshpass -p "$VM_ANSIBLE_P" ssh -t -o StrictHostKeyChecking=no "admin@10.250.0.123" << EOF
+sudo ip netns exec asic0 ip -6 neigh change fc00::1a dev Ethernet-IB0 lladdr 22:d4:83:e7:9c:20
+EOF
+  # ssh into vlab-t2-04
+  sudo ssh-keygen -f "/root/.ssh/known_hosts" -R "10.250.0.124"
+  sshpass -p "$VM_ANSIBLE_P" ssh -t -o StrictHostKeyChecking=no "admin@10.250.0.124" << EOF
+sudo ip netns exec asic0 ip -6 neigh change fc00::2 dev Ethernet-IB0 lladdr 22:3a:62:33:aa:20
+sudo ip netns exec asic0 ip -6 neigh add fc00::4e dev Ethernet-IB0 lladdr 22:3a:62:33:aa:20
+EOF
+}
 
 
 configure_vm_interface() {
@@ -907,13 +866,13 @@ route-map TO_TIER1_V6 deny 15
  match community LOCAL_ANCHOR_ROUTE_COMMUNITY
 
 !
-route-map V6_CONNECTED_ROUTES permit 10
-  no call HIDE_INTERNAL
-end
+
 write memory
 EOF
 }
-
+# route-map V6_CONNECTED_ROUTES permit 10
+#   no call HIDE_INTERNAL
+# end
 t3_push_radian_configs_v_2(){
       echo "Adding RADIAN Configs to T3..."
     docker exec -it $CEOS_CONTAINER_NAME Cli -c "
@@ -962,7 +921,7 @@ t3_push_radian_configs_v_2(){
         route-map FROM_T2_V6 permit 20
           match community LOCAL_ANCHOR_ROUTE_COMMUNITY
           set community community-list LOCAL_ANCHOR_ROUTE_COMMUNITY delete
-          on-match next
+          continue 30
         route-map FROM_T2_V6 permit 30
           match community ANCHOR_ROUTE_COMMUNITY
           set community community-list INREGION_LEAK_COMMUNITY additive
@@ -992,9 +951,10 @@ main() {
         echo "Running configuration set..."
         run_config "$config"
     done
-    # echo "setup_RA"
-    # setup_RA
-    # echo "All configurations processed."
+    echo "setup_RA"
+    setup_RA
+    echo "All configurations processed."
+    fix_pings
 }
 
 # Run the main function

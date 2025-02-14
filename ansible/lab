@@ -238,13 +238,13 @@ sonic_arista_lc:
     start_topo_service: True
     card_type: linecard
   hosts:
-    vlab-t2-05:
+    vlab-t2-01:
       ansible_host: 10.250.0.126
       ansible_hostv6: fec0::ffff:afa:16
       slot_num: slot1
       loopback4096_ip: [192.0.0.0/32]
       loopback4096_ipv6: [2603:10e2:400::/128]
-    vlab-t2-06:
+    vlab-t2-02:
       ansible_host: 10.250.0.127
       ansible_hostv6: fec0::ffff:afa:17
       slot_num: slot2
