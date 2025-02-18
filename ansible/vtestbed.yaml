@@ -129,11 +129,11 @@
   ptf_ip: 10.250.0.109/24
   ptf_ipv6: fec0::ffff:afa:9/64
   server: server_1
-  vm_base: VM0100
+  vm_base: VM0108
   dut:
-    - vlab-t2-01
-    - vlab-t2-02
-    - vlab-t2-sup
+    - vlab-t2-05
+    - vlab-t2-06
+    - vlab-t2-sup2
   inv_name: veos_vtb
   auto_recover: 'False'
   comment: T2 Virtual chassis
@@ -154,6 +154,40 @@
   inv_name: veos_vtb
   auto_recover: 'False'
   comment: T2 Virtual chassis with Multi-ASIC LCs
+
+- conf-name: vms-kvm-t2-min-1
+  group-name: vms6-4-n
+  topo: t2_2lc_min_ports-masic_2
+  ptf_image_name: docker-ptf
+  ptf: ptf-05
+  ptf_ip: 10.250.0.110/24
+  ptf_ipv6: fec0::ffff:afa:a/64
+  server: server_1
+  vm_base: VM0108
+  dut:
+    - vlab-t2-01
+    - vlab-t2-02
+    - vlab-t2-sup
+  inv_name: veos_vtb
+  auto_recover: 'False'
+  comment: T2 Virtual chassis 2 with Multi-ASIC LCs 
+
+# - conf-name: vms-kvm-t2-min-2
+#   group-name: vms6-4
+#   topo: t2_2lc_min_ports
+#   ptf_image_name: docker-ptf
+#   ptf: ptf-04
+#   ptf_ip: 10.250.0.109/24
+#   ptf_ipv6: fec0::ffff:afa:9/64
+#   server: server_1
+#   vm_base: VM0100
+#   dut:
+#     -vlab-t2-01
+#     -vlab-t2-02
+#     - vlab-t2-sup
+#   inv_name: veos_vtb
+#   auto_recover: 'False'
+#   comment: T2 Virtual chassis with Single-ASIC LCs
 
 - conf-name: vms-kvm-t0-3
   group-name: vms6-6

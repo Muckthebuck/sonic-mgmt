@@ -38,6 +38,7 @@ all:
           - t2-vs
           - t2
           - t2_2lc_min_ports-masic
+          - t2_2lc_min_ports-masic_2
           - t2_2lc_min_ports
           - dualtor-mixed
           - dualtor-mixed-56
@@ -205,32 +206,67 @@ all:
           hwsku: MSN3700
         vlab-t2-01:
           ansible_host: 10.250.0.120
+          mgmt_prefixlen: 24
+          mgmt_gw: 10.250.0.1
           ansible_hostv6: fec0::ffff:afa:10
+          mgmt_gw_v6: fec0::1
           type: kvm
-          hwsku: Force10-S6000
+          hwsku: Nokia-IXR7250E-36x400G
           serial_port: 9020
           ansible_password: password
           ansible_user: admin
+          card_type: linecard
+          switch_type: voq
           slot_num: slot1
+          num_asics: 2
+          macsec_enabled: True
+          voq_inband_intf: [Ethernet-IB0,Ethernet-IB1]
+          voq_inband_type: port
+          voq_inband_ip: [3.3.3.5/32,3.3.3.6/32]
+          voq_inband_ipv6: [3333::3:5/128,3333::3:6/128]
+          loopback4096_ip: [8.0.0.5/32,8.0.0.6/32]
+          loopback4096_ipv6: [2603:10e2:400::5/128,2603:10e2:400::6/128]
+          switchids: [8,10]
+          max_cores: 48
+          frontend_asics: [0,1]
         vlab-t2-02:
           ansible_host: 10.250.0.121
+          mgmt_prefixlen: 24
+          mgmt_gw: 10.250.0.1
           ansible_hostv6: fec0::ffff:afa:11
+          mgmt_gw_v6: fec0::1
           type: kvm
-          hwsku: Force10-S6000
+          hwsku: Nokia-IXR7250E-36x400G
           serial_port: 9021
           ansible_password: password
           ansible_user: admin
+          card_type: linecard
+          switch_type: voq
           slot_num: slot2
+          num_asics: 2
+          macsec_enabled: True
+          voq_inband_intf: [Ethernet-IB0,Ethernet-IB1]
+          voq_inband_type: port
+          voq_inband_ip: [3.3.3.7/32,3.3.3.8/32]
+          voq_inband_ipv6: [3333::3:7/128,3333::3:8/128]
+          loopback4096_ip: [8.0.0.7/32,8.0.0.8/32]
+          loopback4096_ipv6: [2603:10e2:400::7/128,2603:10e2:400::8/128]
+          switchids: [12,14]
+          max_cores: 48
+          frontend_asics: [0,1]
         vlab-t2-sup:
           ansible_host: 10.250.0.122
+          mgmt_prefixlen: 24
+          mgmt_gw: 10.250.0.1
           ansible_hostv6: fec0::ffff:afa:12
+          mgmt_gw_v6: fec0::1
           type: kvm
-          hwsku: Force10-S6000
+          hwsku: Nokia-IXR7250E-SUP-10
           serial_port: 9022
           ansible_password: password
           ansible_user: admin
           card_type: supervisor
-          slot_num: slot3
+          slot_num: slot0       
         vlab-t2-03:
           ansible_host: 10.250.0.123
           mgmt_prefixlen: 24
@@ -294,6 +330,37 @@ all:
           ansible_user: admin
           card_type: supervisor
           slot_num: slot0
+        vlab-t2-05:
+          ansible_host: 10.250.0.126
+          ansible_hostv6: fec0::ffff:afa:16
+          type: kvm
+          hwsku: Force10-S6000
+          serial_port: 9020
+          ansible_password: password
+          ansible_user: admin
+          slot_num: slot1
+        vlab-t2-06:
+          ansible_host: 10.250.0.127
+          ansible_hostv6: fec0::ffff:afa:17
+          type: kvm
+          hwsku: Force10-S6000
+          serial_port: 9021
+          ansible_password: password
+          ansible_user: admin
+          slot_num: slot2
+        vlab-t2-sup2:
+          ansible_host: 10.250.0.128
+          mgmt_prefixlen: 24
+          mgmt_gw: 10.250.0.1
+          ansible_hostv6: fec0::ffff:afa:18
+          mgmt_gw_v6: fec0::1
+          type: kvm
+          hwsku: Nokia-IXR7250E-SUP-10
+          serial_port: 9022
+          ansible_password: password
+          ansible_user: admin
+          card_type: supervisor
+          slot_num: slot0      
         vlab-09:
           ansible_host: 10.250.0.115
           ansible_hostv6: fec0::ffff:afb:1
@@ -362,8 +429,8 @@ vm_host_1:
   hosts:
     STR-ACS-VSERV-01:
       ansible_host: 172.17.0.1
-      ansible_user: use_own_value
-      vm_host_user: use_own_value
+      ansible_user: t-mchodhary
+      vm_host_user: t-mchodhary
 
 vms_1:
   hosts:

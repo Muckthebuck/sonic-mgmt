@@ -1463,13 +1463,13 @@
     }
   },
   "DEVICE_NEIGHBOR_METADATA": {
-    "ARISTA03T3": {
+    "ARISTA13T3": {
       "lo_addr": "None",
       "type": "CoreRouter",
       "mgmt_addr": "10.250.0.57",
       "hwsku": "Arista-VM"
     },
-    "ARISTA01T3": {
+    "ARISTA11T3": {
       "lo_addr": "None",
       "type": "CoreRouter",
       "mgmt_addr": "10.250.0.56",
